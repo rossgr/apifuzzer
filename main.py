@@ -11,5 +11,8 @@ for word in sys.stdin:
     if res.status_code == 404:
         continue
     else:
+        JSON_data = res.json()
+        print(word)
         print(JSON_data)
+
 
