@@ -7,8 +7,10 @@ import requests
 import sys
 
 TARGET_URL = ""
-def menuScreen():
-    print('''  ______           __  __  __ __ __  __  __      
+
+# TODO Include optional menu for users to select type of request etc.
+def menuScreen(): 
+    print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
 \::::_\/_  ______\:\ \:\ \:\\:\\:\ \:\ \:\ \    
  \:\/___/\/______/\:\ \:\ \:\\:\\:\ \:\ \:\ \   
@@ -16,11 +18,14 @@ def menuScreen():
    \:\ \            \:\_\:\ \:\\:\\:\ \:\_\:\ \ 
     \_\/             \_____\/\_______\/\_____\/ 
                                                 
-                                                
-Starting script - - -''')
+                                                ''')
     
 menuScreen()
 
+
+# TODO Add validator for URLs, ensure no blank URL or script will not inform user till end of wordlist.
+
+# TODO Increase functionality beyond returning active endpoints such as changing request type. 
 for word in sys.stdin:
     res = requests.get(url=f'{TARGET_URL}/{word}');
     if res.status_code == 404:
