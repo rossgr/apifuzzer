@@ -1,5 +1,5 @@
 # To run:
-# $ cat YOURWORDLIST.txt | python main.py 
+# $ Add wordlist of your choice to same directory as file. Change words to name of wordlist
 
 import colorama
 from colorama import Fore, Style
@@ -9,20 +9,22 @@ import sys
 # TODO Include optional menu for users to select type of request etc.
 
 def menuScreen():
-    TARGET_URL = input( Fore.WHITE + "Enter target URL")
-    # TODO Check valid URL with ping. 
-    userChoice = input('''1. GET \n 2. POST \n 3. PUT \n 4. DELETE \n 5. PATCH \n 6. HEAD ''')
+    TARGET_URL = input( Fore.WHITE + "Enter target URL: \n")
+    # TODO Check valid URL 
+    userChoice = input('''1. GET \n 2. POST \n 3. PUT \n 4. DELETE \n 5. PATCH \n 6. HEAD \n ''')
     if userChoice == '1':
         httpGET(TARGET_URL)
     else:
         return "err"
     
 def httpGET(TARGET_URL):
-    for word in sys.stdin:
+    words = open('small.txt', 'r')
+    wordlist = words.readlines()
+    for word in wordlist:
         print(TARGET_URL);
         res = requests.get(url=f'{TARGET_URL}{word}');
         if res.status_code == 404:
-            print( Fore.RED + word + '' + res.status_code)
+            continue
         elif res.status_code <= 299 or res.status_code >=200:
             JSON_data = res.json()
             print(Fore.GREEN + word + '' + res.status_code)
