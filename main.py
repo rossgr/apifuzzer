@@ -13,16 +13,15 @@ def handler():
     parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
     parser.add_argument('-u', '--url', required=True)
     parser.add_argument('-w', '--wordlist', required=True)
-    parser.add_argument('-v', '--verbose')
-    parser.add_argument('-z', '--version') 
+    parser.add_argument('-v', '--version') 
 
     args = parser.parse_args();
+
     
-def httpGET(TARGET_URL):
-    words = open('small.txt', 'r')
+def httpGET(TARGET_URL, wlist):
+    words = open(wlist, 'r')
     wordlist = words.readlines()
     for word in wordlist:
-        print(TARGET_URL);
         res = requests.get(url=f'{TARGET_URL}{word}');
         if res.status_code == 404:
             continue
