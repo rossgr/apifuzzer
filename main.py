@@ -9,7 +9,7 @@ import argparse
 
 # TODO Include optional menu for users to select type of request etc.
 
-def handler():
+def arg_handler():
     parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
     parser.add_argument('-u', '--url', required=True)
     parser.add_argument('-w', '--wordlist', required=True)
@@ -40,8 +40,7 @@ def httpGET(TARGET_URL, wlist):
             print(JSON_data)
 
 def httpPOST(TARGET_URL, PAYLOAD, wlist):
-    words = open(wlist, 'r')
-    wordlist = words.readlines()
+    
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
 \::::_\/_  ______\:\ \:\ \:\\:\\:\ \:\ \:\ \    
@@ -53,7 +52,7 @@ print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __
                                                 ''')
     
     
-handler()
+arg_handler()
 
 
 # TODO Add validator for URLs, ensure no blank URL or script will not inform user till end of wordlist.
