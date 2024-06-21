@@ -5,17 +5,18 @@ import colorama
 from colorama import Fore, Style
 import requests
 import sys
+import argparse
 
 # TODO Include optional menu for users to select type of request etc.
 
-def menuScreen():
-    TARGET_URL = input( Fore.WHITE + "Enter target URL: \n")
-    # TODO Check valid URL 
-    userChoice = input('''1. GET \n 2. POST \n 3. PUT \n 4. DELETE \n 5. PATCH \n 6. HEAD \n ''')
-    if userChoice == '1':
-        httpGET(TARGET_URL)
-    else:
-        return "err"
+def handler():
+    parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
+    parser.add_argument('-u', '--url', required=True)
+    parser.add_argument('-w', '--wordlist', required=True)
+    parser.add_argument('-v', '--verbose')
+    parser.add_argument('-z', '--version') 
+
+    args = parser.parse_args();
     
 def httpGET(TARGET_URL):
     words = open('small.txt', 'r')
@@ -30,8 +31,10 @@ def httpGET(TARGET_URL):
             print(Fore.GREEN + word + '' + res.status_code)
             print(JSON_data)
     
-
-
+def printHelp():
+    print(Fore.BLUE + '''
+        usage: python main.py -w example.txt -u https://example.org
+    ''')
    
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
@@ -44,7 +47,7 @@ print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __
                                                 ''')
     
     
-menuScreen()
+handler()
 
 
 # TODO Add validator for URLs, ensure no blank URL or script will not inform user till end of wordlist.
