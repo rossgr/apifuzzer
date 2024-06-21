@@ -17,24 +17,31 @@ def handler():
 
     args = parser.parse_args();
 
+    httpGET(args.url, args.wordlist)
+
+    
+
+def wordListLoad(wlist):
+    words = open(wlist, 'r')
+    wordlist = words.readlines();
+    return wordlist
     
 def httpGET(TARGET_URL, wlist):
-    words = open(wlist, 'r')
-    wordlist = words.readlines()
-    for word in wordlist:
-        res = requests.get(url=f'{TARGET_URL}{word}');
+    wordListLoad(wlist)
+    for word in wordListLoad(wlist):
+        res = requests.get(url=f'{TARGET_URL}{word}')
+        print(res)
+        print(f'{TARGET_URL}{word}')
         if res.status_code == 404:
             continue
         elif res.status_code <= 299 or res.status_code >=200:
             JSON_data = res.json()
             print(Fore.GREEN + word + '' + res.status_code)
             print(JSON_data)
-    
-def printHelp():
-    print(Fore.BLUE + '''
-        usage: python main.py -w example.txt -u https://example.org
-    ''')
-   
+
+def httpPOST(TARGET_URL, PAYLOAD, wlist):
+    words = open(wlist, 'r')
+    wordlist = words.readlines()
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
 \::::_\/_  ______\:\ \:\ \:\\:\\:\ \:\ \:\ \    
