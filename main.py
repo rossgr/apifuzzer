@@ -1,13 +1,9 @@
-# To run:
-# $ Add wordlist of your choice to same directory as file. Change words to name of wordlist
-
 import colorama
 from colorama import Fore, Style
 import requests
 import sys
 import argparse
-
-# TODO Include optional menu for users to select type of request etc.
+import validators
 
 def arg_handler():
     parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
@@ -17,14 +13,19 @@ def arg_handler():
     parser.add_argument('-r', '--request', required=True)
 
     args = parser.parse_args();
+    if validators.url(args.url):
+        match args.request.upper():
+            case "GET":
+                httpGET(args.url, args.wordlist)
+            case "POST":
+                httpPOST(args.url, args.payload, args.wordlist)
+            case _:
+                exit()
+    else:
+        print("Invalid URL type")    
 
-    match args.request.upper():
-        case "GET":
-            httpGET(args.url, args.wordlist)
-        case "POST":
-            httpPOST(args.url, args.payload, args.wordlist)
-        case _:
-            exit()
+
+        
     
 
 def wordListLoad(wlist):
@@ -32,12 +33,12 @@ def wordListLoad(wlist):
     wordlist = words.readlines();
     return wordlist
 
-def httpGET(TARGET_URL, wlist):
+def httpGET(URL, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
-        res = requests.get(url=f'{TARGET_URL}{word}')
+        res = requests.get(url=f'{URL}{word}')
         print(res)
-        print(f'{TARGET_URL}{word}')
+        print(f'{URL}{word}')
         if res.status_code == 404:
             continue
         elif res.status_code <= 299 or res.status_code >=200:
@@ -45,10 +46,10 @@ def httpGET(TARGET_URL, wlist):
             print(Fore.GREEN + word + '' + res.status_code)
             print(JSON_data)
 
-def httpPOST(TARGET_URL, PAYLOAD, wlist):
+def httpPOST(URL, PAYLOAD, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
-        res = requests.get(url=f'{TARGET_URL}{word}')
+        res = requests.get(url=f'{URL}{word}')
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
@@ -62,8 +63,3 @@ print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __
     
     
 arg_handler()
-
-
-# TODO Add validator for URLs, ensure no blank URL or script will not inform user till end of wordlist.
-
-# TODO Increase functionality beyond returning active endpoints such as changing request type. 
