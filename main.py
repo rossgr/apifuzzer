@@ -54,7 +54,9 @@ def httpPOST(URL, payload, wlist):
     wordListLoad(wlist)
     JSONListLoad(payload)
     for word in wordListLoad(wlist):
-        res = requests.post(url=f'{URL}{word}')
+        for pload in payload[]:
+            print(pload)
+        res = requests.post(url=f'{URL}{word}', json=pload)
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
