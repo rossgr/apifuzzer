@@ -11,6 +11,7 @@ def arg_handler():
     parser.add_argument('-u', '--url', required=True)
     parser.add_argument('-w', '--wordlist', required=True)
     parser.add_argument('-v', '--version') 
+    parser.add_arugment('-p', '--payload')
     parser.add_argument('-r', '--request', required=True)
 
     args = parser.parse_args();
@@ -26,17 +27,15 @@ def arg_handler():
         print("Invalid URL type")    
 
 
-        
-    
-
 def wordListLoad(wlist):
     words = open(wlist, 'r')
     wordlist = words.readlines();
     return wordlist
 
-def JSONListLoad(jList):
-    jsonList = open(f'{jList}.json')
+def JSONListLoad(payload):
+    jsonList = open(f'{payload}.json')
     data = json.load(jsonList)
+    return data
 
 def httpGET(URL, wlist):
     wordListLoad(wlist)
@@ -51,11 +50,10 @@ def httpGET(URL, wlist):
             print(Fore.GREEN + word + '' + res.status_code)
             print(JSON_data)
 
-def httpPOST(URL, PAYLOAD, wlist):
+def httpPOST(URL, payload, wlist):
     wordListLoad(wlist)
-    JSONListLoad(jList)
+    JSONListLoad(payload)
     for word in wordListLoad(wlist):
-        for payload in paylo
         res = requests.post(url=f'{URL}{word}')
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
