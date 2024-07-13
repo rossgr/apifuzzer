@@ -18,8 +18,13 @@ def arg_handler():
 
     args = parser.parse_args();
 
-    httpGET(args.url, args.wordlist)
-
+    match args.request.upper():
+        case "GET":
+            httpGET(args.url, args.wordlist)
+        case "POST":
+            httpPOST(args.url, args.payload, args.wordlist)
+        case _:
+            exit()
     
 
 def wordListLoad(wlist):
@@ -43,7 +48,7 @@ def httpGET(TARGET_URL, wlist):
 def httpPOST(TARGET_URL, PAYLOAD, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
-        res = requests.get(url=f'{TARGET_URL}{word})
+        res = requests.get(url=f'{TARGET_URL}{word}')
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
