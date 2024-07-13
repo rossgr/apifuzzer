@@ -14,6 +14,7 @@ def arg_handler():
     parser.add_argument('-u', '--url', required=True)
     parser.add_argument('-w', '--wordlist', required=True)
     parser.add_argument('-v', '--version') 
+    parser.add_argument('-r', '--request', required=True)
 
     args = parser.parse_args();
 
@@ -25,7 +26,7 @@ def wordListLoad(wlist):
     words = open(wlist, 'r')
     wordlist = words.readlines();
     return wordlist
-    
+
 def httpGET(TARGET_URL, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
@@ -40,6 +41,9 @@ def httpGET(TARGET_URL, wlist):
             print(JSON_data)
 
 def httpPOST(TARGET_URL, PAYLOAD, wlist):
+    wordListLoad(wlist)
+    for word in wordListLoad(wlist):
+        res = requests.get(url=f'{TARGET_URL}{word})
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
