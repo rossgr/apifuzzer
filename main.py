@@ -4,6 +4,7 @@ import requests
 import sys
 import argparse
 import validators
+import json
 
 def arg_handler():
     parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
@@ -33,6 +34,10 @@ def wordListLoad(wlist):
     wordlist = words.readlines();
     return wordlist
 
+def JSONListLoad(jList):
+    jsonList = open(f'{jList}.json')
+    data = json.load(jsonList)
+
 def httpGET(URL, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
@@ -48,8 +53,10 @@ def httpGET(URL, wlist):
 
 def httpPOST(URL, PAYLOAD, wlist):
     wordListLoad(wlist)
+    JSONListLoad(jList)
     for word in wordListLoad(wlist):
-        res = requests.get(url=f'{URL}{word}')
+        for payload in paylo
+        res = requests.post(url=f'{URL}{word}')
     
 print(Fore.MAGENTA + '''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
