@@ -1,10 +1,13 @@
-import colorama
-from colorama import Fore, Style
+import termcolor
+import os
+from termcolor import colored, cprint
 import requests
 import sys
 import argparse
 import validators
 import json
+
+os.system('color')
 
 def arg_handler():
     parser = argparse.ArgumentParser(prog="F-UWU", description="Python API Fuzzer")
@@ -51,17 +54,18 @@ def httpGET(URL, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
         res = requests.get(url=f'{URL}{word}')
-        if res.status_code <= 599 or res.status_code >= 400 :
-            print(Fore.RED + word + ' ' + str([res.status_code]))
-        elif res.status_code <= 299 or res.status_code >=200:
-            print(Fore.GREEN + word + ' ' + str([res.status_code]))
+        if res.ok:
+            cprint(word + ' ' + str([res.status_code]), "green")
+        else:
+            cprint(word + ' ' + str([res.status_code]), "red")
+
 
 def httpPOST(URL, payload, wlist):
     for word in wordListLoad(wlist):
         for pload in payloadListLoad(payload):
             res = requests.post(url=f'{URL}{word}', data=pload)
     
-print(Fore.MAGENTA + 
+cprint( 
 r'''  ______           __  __  __ __ __  __  __      
 /_____/\         /_/\/_/\/_//_//_/\/_/\/_/\     
 \::::_\/_  ______\:\ \:\ \:\\:\\:\ \:\ \:\ \    
@@ -70,7 +74,7 @@ r'''  ______           __  __  __ __ __  __  __
    \:\ \            \:\_\:\ \:\\:\\:\ \:\_\:\ \ 
     \_\/             \_____\/\_______\/\_____\/ 
                                                 
-                                                ''' + '\n')
+                                                ''', 'magenta')
     
     
 arg_handler()

@@ -1,4 +1,4 @@
-colorama==0.4.6
+termcolor==2.4.0
 argparse==1.4.0
 requests==2.32.3
 validators==0.32.0
