@@ -51,14 +51,10 @@ def httpGET(URL, wlist):
     wordListLoad(wlist)
     for word in wordListLoad(wlist):
         res = requests.get(url=f'{URL}{word}')
-        print(res)
-        print(f'{URL}{word}')
-        if res.status_code == 404:
-            continue
+        if res.status_code <= 599 or res.status_code >= 400 :
+            print(Fore.RED + word + ' ' + str([res.status_code]))
         elif res.status_code <= 299 or res.status_code >=200:
-            JSON_data = res.json()
-            print(Fore.GREEN + word + '' + res.status_code)
-            print(JSON_data)
+            print(Fore.GREEN + word + ' ' + str([res.status_code]))
 
 def httpPOST(URL, payload, wlist):
     for word in wordListLoad(wlist):
@@ -74,7 +70,7 @@ r'''  ______           __  __  __ __ __  __  __
    \:\ \            \:\_\:\ \:\\:\\:\ \:\_\:\ \ 
     \_\/             \_____\/\_______\/\_____\/ 
                                                 
-                                                ''')
+                                                ''' + '\n')
     
     
 arg_handler()
