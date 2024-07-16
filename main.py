@@ -51,13 +51,14 @@ def JSONListLoad(payload):
     return data
 
 def httpGET(URL, wlist):
-    wordListLoad(wlist)
-    for word in wordListLoad(wlist):
+    wordlist = wordListLoad(wlist)
+    for word in wordlist:
         res = requests.get(url=f'{URL}{word}')
-        if res.ok:
-            cprint(word + ' ' + str([res.status_code]), "green")
+        if res.status_code <=599 and res.status_code >= 300:
+            cprint(str(res) + '\n' + word, "red")
+
         else:
-            cprint(word + ' ' + str([res.status_code]), "red")
+            cprint(str(res) + "\n" +  word, "green")
 
 
 def httpPOST(URL, payload, wlist):
